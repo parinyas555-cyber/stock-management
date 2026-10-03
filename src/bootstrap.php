@@ -89,6 +89,16 @@ function setup_database(){
     }
     $pdo->exec($schema);
 
+    $pdo->exec("CREATE TABLE IF NOT EXISTS warehouse_reset_logs (
+        id BIGSERIAL PRIMARY KEY,
+        user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+        product_count_before INTEGER NOT NULL DEFAULT 0,
+        movement_count_before INTEGER NOT NULL DEFAULT 0,
+        stock_total_before INTEGER NOT NULL DEFAULT 0,
+        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    )");
+    $pdo->exec('CREATE INDEX IF NOT EXISTS idx_reset_logs_created ON warehouse_reset_logs(created_at)');
+
     $count = (int)$pdo->query('SELECT COUNT(*) FROM users')->fetchColumn();
     if ($count === 0) {
         $s = $pdo->prepare('INSERT INTO users(username,password_hash,full_name,role,active) VALUES(?,?,?,?,TRUE)');

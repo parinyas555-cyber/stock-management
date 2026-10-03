@@ -10,7 +10,7 @@ function page_start($title){global $appName,$flash,$dbError;?>
   <div class="nav-section">เมนูหลัก</div>
   <?php nav('dashboard.php','แดชบอร์ด','⌂'); nav('products.php','คลังสินค้า','▣'); nav('stock_in.php','สินค้าเข้า','＋'); nav('stock_out.php','สินค้าออก','−'); nav('movements.php','รายการเคลื่อนไหว','↕'); nav('reports.php','รายงานสรุป','▤'); ?>
   <div class="nav-section">บัญชีผู้ใช้</div>
-  <?php nav('password.php','เปลี่ยนรหัสผ่าน','🔑'); if(is_admin()) nav('users.php','การจัดการผู้ใช้งาน','♙'); ?>
+  <?php nav('password.php','เปลี่ยนรหัสผ่าน','🔑'); if(is_admin()) { nav('users.php','การจัดการผู้ใช้งาน','♙'); nav('reset.php','Factory Reset','⚠'); } ?>
   <div class="sidebar-divider"></div>
   <a class="nav-link" href="/logout.php"><span class="nav-icon">↪</span><span>ออกจากระบบ</span></a>
   <div style="margin:14px 8px 4px;padding:12px;border:1px solid rgba(148,163,184,.14);border-radius:14px;background:rgba(255,255,255,.045);font-size:11px;color:#94a3b8;line-height:1.5"><div style="color:#cbd5e1;font-weight:700">ระบบพร้อมใช้งาน</div><div>คลังสินค้าออนไลน์ • PostgreSQL</div></div>

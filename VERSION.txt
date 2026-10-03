@@ -1,1 +1,1 @@
-Stock Management V11 - Product soft-delete / inactive status
+Stock Management V12 - Admin Factory Reset + CSV backup + reset audit log
