@@ -1,1 +1,1 @@
-Stock Management V12 - Admin Factory Reset + CSV backup + reset audit log
+Stock Management V14 - Admin-only permanent product deletion
