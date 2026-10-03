@@ -1,7 +1,3 @@
-Stock Management V6
-
-Fixes in V6:
-- Moved shared partials.php from public/ to src/ so the Docker container path matches application references.
-- Replaced hard-coded /var/www/src/... PHP includes with __DIR__-relative paths.
-- Added Docker build-time checks for required application files.
-- Retained Render Blueprint PostgreSQL database configuration from V5.
+Stock Management V7
+Fix: PostgreSQL stock IN/OUT INSERT placeholder count mismatch.
+Fix: Ensure stock_movements INSERT has matching columns, placeholders, and execute parameters.
