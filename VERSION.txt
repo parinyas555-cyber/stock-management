@@ -1,1 +1,1 @@
-Stock Management V10 - Modern Colorful Professional UI refresh
+Stock Management V11 - Product soft-delete / inactive status
