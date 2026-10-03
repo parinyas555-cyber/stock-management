@@ -93,15 +93,19 @@ if ($type === 'xlsx') {
     exit;
 }
 
-$fontPath = '/var/www/fonts/NotoSansThai-Regular.ttf';
+$fontRegular = '/var/www/fonts/NotoSansThai-Regular.ttf';
+$fontBold = '/var/www/fonts/NotoSansThai-Bold.ttf';
 $fontFace = '';
-if (is_file($fontPath)) {
-    $fontFace = '@font-face{font-family:NotoThai;src:url("file://' . $fontPath . '") format("truetype");font-weight:400;font-style:normal;}';
+if (is_file($fontRegular)) {
+    $fontFace .= '@font-face{font-family:NotoThai;src:url("file://' . $fontRegular . '") format("truetype");font-weight:400;font-style:normal;}';
+}
+if (is_file($fontBold)) {
+    $fontFace .= '@font-face{font-family:NotoThai;src:url("file://' . $fontBold . '") format("truetype");font-weight:700;font-style:normal;}';
 }
 
 $html = '<!doctype html><html><head><meta charset="UTF-8"><style>'
     . $fontFace
-    . 'body{font-family:NotoThai,DejaVu Sans,sans-serif;font-size:10px;color:#222}'
+    . 'body{font-family:NotoThai,"Noto Sans Thai",DejaVu Sans,sans-serif;font-size:10px;color:#222}'
     . 'h2{text-align:center;margin:0 0 8px}'
     . 'p{margin:4px 0 10px}'
     . 'table{width:100%;border-collapse:collapse}'
@@ -131,6 +135,7 @@ $options = new Options();
 $options->set('isHtml5ParserEnabled', true);
 $options->set('isRemoteEnabled', false);
 $options->setChroot('/var/www');
+$options->set('defaultFont', 'NotoThai');
 
 $pdf = new Dompdf($options);
 $pdf->loadHtml($html, 'UTF-8');

@@ -1,3 +1,2 @@
-Stock Management V7
-Fix: PostgreSQL stock IN/OUT INSERT placeholder count mismatch.
-Fix: Ensure stock_movements INSERT has matching columns, placeholders, and execute parameters.
+V9
+Modern professional UI refresh based on V8.

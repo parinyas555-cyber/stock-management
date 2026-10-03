@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         zip \
     && mkdir -p /var/www/fonts \
     && cp /usr/share/fonts/truetype/noto/NotoSansThai-Regular.ttf /var/www/fonts/ \
+    && cp /usr/share/fonts/truetype/noto/NotoSansThai-Bold.ttf /var/www/fonts/ \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*
 
@@ -35,12 +36,15 @@ RUN cd /var/www \
 COPY public/ /var/www/html/
 COPY src/ /var/www/src/
 COPY sql/ /var/www/sql/
+COPY fonts/ /var/www/fonts/
 
 # Fail the image build early if the application structure is incomplete.
 RUN test -f /var/www/src/bootstrap.php \
     && test -f /var/www/src/partials.php \
     && test -f /var/www/sql/schema.sql \
     && test -f /var/www/html/dashboard.php \
+    && test -f /var/www/fonts/NotoSansThai-Regular.ttf \
+    && test -f /var/www/fonts/NotoSansThai-Bold.ttf \
     && chown -R www-data:www-data /var/www/html /var/www/src /var/www/sql /var/www/vendor
 
 EXPOSE 80
