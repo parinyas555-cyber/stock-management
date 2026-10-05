@@ -8,7 +8,7 @@ function page_start($title){global $appName,$flash,$dbError;?>
 <aside class="sidebar" id="sidebar">
   <div class="brand"><div class="brand-mark">📦</div><div><div class="brand-title">Stock Management</div><div class="brand-sub">ระบบจัดการคลังสินค้า</div></div></div>
   <div class="nav-section">เมนูหลัก</div>
-  <?php nav('dashboard.php','แดชบอร์ด','⌂'); nav('products.php','คลังสินค้า','▣'); nav('stock_in.php','สินค้าเข้า','＋'); nav('stock_out.php','สินค้าออก','−'); nav('movements.php','รายการเคลื่อนไหว','↕'); nav('reports.php','รายงานสรุป','▤'); ?>
+  <?php nav('dashboard.php','Dashboard','⌂'); nav('products.php','คลังสินค้า','▣'); nav('stock_in.php','สินค้าเข้า','＋'); nav('stock_out.php','สินค้าออก','−'); nav('movements.php','รายการเคลื่อนไหว','↕'); nav('reports.php','รายงานสรุป','▤'); ?>
   <div class="nav-section">บัญชีผู้ใช้</div>
   <?php nav('password.php','เปลี่ยนรหัสผ่าน','🔑'); if(is_admin()) { nav('users.php','การจัดการผู้ใช้งาน','♙'); nav('reset.php','Factory Reset','⚠'); } ?>
   <div class="sidebar-divider"></div>
