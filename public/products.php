@@ -74,8 +74,18 @@ function selectProductRow(row){
  row.classList.add('selected');
  selectedName.textContent=row.dataset.productName||'';
  selectedCode.textContent='รหัสสินค้า: '+(row.dataset.productCode||'');
- if(row.dataset.hasImage==='1'){selectedImage.src='/image.php?id='+encodeURIComponent(row.dataset.productId);selectedImage.style.display='block';selectedEmpty.style.display='none';selectedContent.style.display='block';}
- else{selectedImage.removeAttribute('src');selectedImage.style.display='none';selectedContent.style.display='block';selectedEmpty.textContent='สินค้านี้ยังไม่มีรูปภาพ';selectedEmpty.style.display='block';}
+ selectedContent.style.display='block';
+ selectedEmpty.style.display='none';
+ selectedImage.style.display='none';
+ selectedImage.removeAttribute('src');
+ if(row.dataset.hasImage==='1'){
+   selectedImage.onload=()=>{selectedImage.style.display='block';};
+   selectedImage.onerror=()=>{selectedImage.style.display='none';selectedEmpty.textContent='ไม่สามารถแสดงรูปภาพสินค้าได้';selectedEmpty.style.display='flex';};
+   selectedImage.src='/image.php?id='+encodeURIComponent(row.dataset.productId)+'&v='+Date.now();
+ }else{
+   selectedEmpty.textContent='สินค้านี้ยังไม่มีรูปภาพ';
+   selectedEmpty.style.display='flex';
+ }
 }
 document.querySelectorAll('.product-row').forEach(row=>row.addEventListener('click',e=>{if(e.target.closest('a,button,input,select,textarea,form'))return;selectProductRow(row);}));
 </script><?php page_end();
