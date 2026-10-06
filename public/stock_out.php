@@ -32,6 +32,7 @@ page_start('สินค้าออก');
       </button>
      <?php endforeach; ?>
      <div class="product-search-empty" id="stockOutEmpty" style="display:none">ไม่พบสินค้าที่ค้นหา</div>
+     <div class="product-search-pagination" id="stockOutPagination" style="display:none"></div>
     </div>
    </div>
    <div class="selected-product-inline" id="stockOutSelectedText">ยังไม่ได้เลือกสินค้า</div>
@@ -55,11 +56,13 @@ page_start('สินค้าออก');
 </div>
 <script>
 (function(){
- const input=document.getElementById('stockOutSearch'), hidden=document.getElementById('stockOutProductId'), list=document.getElementById('stockOutList'), empty=document.getElementById('stockOutEmpty'), selectedText=document.getElementById('stockOutSelectedText');
+ const input=document.getElementById('stockOutSearch'), hidden=document.getElementById('stockOutProductId'), list=document.getElementById('stockOutList'), empty=document.getElementById('stockOutEmpty'), pagination=document.getElementById('stockOutPagination'), selectedText=document.getElementById('stockOutSelectedText');
  const imgEmpty=document.getElementById('stockOutImageEmpty'), imgContent=document.getElementById('stockOutImageContent'), img=document.getElementById('stockOutImage'), imgName=document.getElementById('stockOutImageName'), imgCode=document.getElementById('stockOutImageCode');
+ const allItems=Array.from(document.querySelectorAll('#stockOutList .product-search-item'));
+ const pageSize=5; let filteredItems=allItems.slice(), currentPage=1;
  function selectProduct(btn){
   document.querySelectorAll('#stockOutList .product-search-item.selected').forEach(x=>x.classList.remove('selected')); btn.classList.add('selected');
-  hidden.value=btn.dataset.id; input.value=btn.dataset.name+' ('+btn.dataset.code+')'; selectedText.textContent='สินค้าที่เลือก: '+btn.dataset.code+' - '+btn.dataset.name+' • คงเหลือ '+btn.dataset.stock;
+  hidden.value=btn.dataset.id; input.value=btn.dataset.name+' ('+btn.dataset.code+')'; selectedText.textContent='สินค้าที่เลือก: '+btn.dataset.code+' - '+btn.dataset.name;
   imgContent.style.display='none'; imgEmpty.style.display='flex'; img.removeAttribute('src'); img.onload=null; img.onerror=null;
   imgName.textContent=btn.dataset.name||''; imgCode.textContent='รหัสสินค้า: '+(btn.dataset.code||'');
   if(btn.dataset.hasImage==='1'){
@@ -68,11 +71,26 @@ page_start('สินค้าออก');
    img.src='/image.php?id='+encodeURIComponent(btn.dataset.id)+'&v='+Date.now();
   }else{imgEmpty.textContent='สินค้านี้ยังไม่มีรูปภาพ';}
  }
- function filter(){const q=input.value.trim().toLowerCase();let count=0;document.querySelectorAll('#stockOutList .product-search-item').forEach(btn=>{const hay=(btn.dataset.name+' '+btn.dataset.code).toLowerCase();const show=!q||hay.includes(q);btn.style.display=show?'flex':'none';if(show)count++;});empty.style.display=count?'none':'block';list.classList.add('open');}
+ function renderPage(){
+  const totalPages=Math.max(1,Math.ceil(filteredItems.length/pageSize)); currentPage=Math.min(currentPage,totalPages);
+  allItems.forEach(btn=>btn.style.display='none');
+  const start=(currentPage-1)*pageSize;
+  filteredItems.slice(start,start+pageSize).forEach(btn=>btn.style.display='flex');
+  empty.style.display=filteredItems.length?'none':'block';
+  if(filteredItems.length>pageSize){
+   pagination.style.display='flex';
+   pagination.innerHTML='<span>หน้า '+currentPage+' / '+totalPages+'</span><div class="actions" style="margin:0;gap:6px">'+
+    (currentPage>1?'<button type="button" class="button secondary" data-page="'+(currentPage-1)+'">‹ ก่อนหน้า</button>':'<button type="button" class="button secondary" disabled>‹ ก่อนหน้า</button>')+
+    (currentPage<totalPages?'<button type="button" class="button primary" data-page="'+(currentPage+1)+'">ถัดไป ›</button>':'<button type="button" class="button primary" disabled>ถัดไป ›</button>')+'</div>';
+   pagination.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>{currentPage=Number(b.dataset.page);renderPage();}));
+  }else{pagination.style.display='none';pagination.innerHTML='';}
+ }
+ function filter(){const q=input.value.trim().toLowerCase();filteredItems=allItems.filter(btn=>{const hay=(btn.dataset.name+' '+btn.dataset.code).toLowerCase();return !q||hay.includes(q);});currentPage=1;renderPage();list.classList.add('open');}
  input.addEventListener('focus',filter); input.addEventListener('input',filter);
- document.querySelectorAll('#stockOutList .product-search-item').forEach(btn=>btn.addEventListener('click',()=>{selectProduct(btn);list.classList.remove('open');}));
+ allItems.forEach(btn=>btn.addEventListener('click',()=>{selectProduct(btn);list.classList.remove('open');}));
  document.getElementById('stockOutForm').addEventListener('submit',e=>{if(!hidden.value){e.preventDefault();alert('กรุณาเลือกสินค้า');input.focus();}});
  document.addEventListener('click',e=>{if(!e.target.closest('.product-search-box'))list.classList.remove('open');});
+ renderPage();
 })();
 </script>
 <?php page_end();

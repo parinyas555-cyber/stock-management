@@ -1,5 +1,5 @@
-Stock Management V21
-- Stock IN/OUT searchable product selector by code/name
-- Selected product image panel matching Warehouse layout
-- No need to scroll through large product lists
-- Responsive desktop/mobile layout
+Stock Management V22
+- Dashboard low-stock list shows 5 items per page with Previous/Next
+- Stock IN/OUT product search results show 5 items per page with Previous/Next
+- Existing table pages retain 10/20/30/50/100 pagination
+- Large visible lists are paginated to reduce scrolling

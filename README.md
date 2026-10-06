@@ -1,13 +1,11 @@
-# Stock Management V21
+# Stock Management V22
 
-V21 is based on V20 and adds improvements to the Stock IN / Stock OUT pages.
+V22 is based on V21 and improves pagination for areas that can contain many visible items.
 
 ## Changes
-- Search products directly by product name or product code without scrolling through a long list.
-- Search results show product name, code, and current stock.
-- Clicking a product selects it for the transaction.
-- Selected product image is shown in a separate panel on the right, matching the Warehouse page layout.
-- Products without images show a message instead of an empty image box.
-- Image loading errors are handled without creating extra image boxes.
-- Responsive layout for desktop and mobile.
-- Existing V20 features are preserved.
+- Dashboard **สินค้าที่ควรเติมสต๊อก** now displays only 5 products per page.
+- Added **‹ ก่อนหน้า / ถัดไป ›** navigation to the dashboard low-stock list when more than 5 items exist.
+- Stock IN / Stock OUT product search results now show 5 results per page with Previous/Next controls instead of a long scrolling product list.
+- Search still works by product name or product code and resets pagination to page 1.
+- Existing product, report, movement, and user tables retain their 10/20/30/50/100 per-page controls.
+- Existing V21 image selection and selected-product image panels are preserved.
