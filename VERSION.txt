@@ -1,1 +1,1 @@
-Stock Management V15 - Product pagination (25 items/page) with Previous/Next
+Stock Management V18 - Product image selection panel
