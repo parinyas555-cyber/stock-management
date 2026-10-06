@@ -1,5 +1,8 @@
-Stock Management V22
-- Dashboard low-stock list shows 5 items per page with Previous/Next
-- Stock IN/OUT product search results show 5 items per page with Previous/Next
-- Existing table pages retain 10/20/30/50/100 pagination
-- Large visible lists are paginated to reduce scrolling
+Stock Management V23
+
+- Pagination Next/Previous now loads page content with AJAX without full browser refresh
+- Dashboard low-stock list remains 5 items per page with non-refresh pagination
+- Existing 10/20/30/50/100 pagination remains and changes pages without refresh
+- Per-page dropdown changes also use AJAX without full page refresh
+- Browser Back/Forward works with AJAX pagination
+- Existing V22 features retained
