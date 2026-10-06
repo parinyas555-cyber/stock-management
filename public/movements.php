@@ -31,9 +31,9 @@ page_start('รายการเคลื่อนไหวล่าสุด')
     <label style="margin:0">แสดงต่อหน้า</label><select name="per_page" onchange="this.form.submit()"><?php foreach([10,20,30,50,100] as $n): ?><option value="<?=$n?>" <?=$perPage===$n?'selected':''?>><?=$n?> รายการ</option><?php endforeach; ?></select>
   </form>
   <div class="actions" style="margin:0">
-    <?php if($page>1): ?><a class="button secondary" href="/movements.php?<?=$queryBase?>&page=<?=$page-1?>">‹ ก่อนหน้า</a><?php else: ?><button class="button secondary" type="button" disabled>‹ ก่อนหน้า</button><?php endif; ?>
+    <?php if($page>1): ?><a class="button secondary" href="/movements.php?<?=$queryBase?>&page=1">« หน้าแรก</a><a class="button secondary" href="/movements.php?<?=$queryBase?>&page=<?=$page-1?>">‹ ก่อนหน้า</a><?php else: ?><button class="button secondary" type="button" disabled>« หน้าแรก</button><button class="button secondary" type="button" disabled>‹ ก่อนหน้า</button><?php endif; ?>
     <span class="button secondary" style="cursor:default">หน้า <?=$page?> / <?=$totalPages?></span>
-    <?php if($page<$totalPages): ?><a class="button primary" href="/movements.php?<?=$queryBase?>&page=<?=$page+1?>">ถัดไป ›</a><?php else: ?><button class="button primary" type="button" disabled>ถัดไป ›</button><?php endif; ?>
+    <?php if($page<$totalPages): ?><a class="button primary" href="/movements.php?<?=$queryBase?>&page=<?=$page+1?>">ถัดไป ›</a><a class="button primary" href="/movements.php?<?=$queryBase?>&page=<?=$totalPages?>">หน้าสุดท้าย »</a><?php else: ?><button class="button primary" type="button" disabled>ถัดไป ›</button><button class="button primary" type="button" disabled>หน้าสุดท้าย »</button><?php endif; ?>
   </div>
 </div>
 <?php else: ?><div class="card" style="margin-top:18px;text-align:center;color:#64748b">ไม่พบรายการเคลื่อนไหวในช่วงวันที่ที่เลือก</div><?php endif; ?>

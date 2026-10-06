@@ -1,9 +1,1 @@
-Stock Management V23.1
-
-- Pagination Next/Previous now loads page content with AJAX without full browser refresh
-- Dashboard low-stock list remains 5 items per page with non-refresh pagination
-- Existing 10/20/30/50/100 pagination remains and changes pages without refresh
-- Per-page dropdown changes also use AJAX without full page refresh
-- Browser Back/Forward works with AJAX pagination
-- Existing V22 features retained
-- AJAX pagination preserves the current browser scroll position (no jump to top)
+V24

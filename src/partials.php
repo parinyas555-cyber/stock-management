@@ -32,7 +32,7 @@ checkSystemStatus();setInterval(checkSystemStatus,15000);
   function isPaginationLink(a){
     if(!a || !a.href || a.target==='_blank') return false;
     const text=(a.textContent||'').trim();
-    if(!/ก่อนหน้า|ถัดไป|Previous|Next/.test(text)) return false;
+    if(!/หน้าแรก|หน้าสุดท้าย|ก่อนหน้า|ถัดไป|Previous|Next/.test(text)) return false;
     const u=new URL(a.href,location.href);
     return u.origin===location.origin && u.pathname===location.pathname;
   }

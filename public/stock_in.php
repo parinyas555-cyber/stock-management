@@ -32,7 +32,6 @@ page_start('สินค้าเข้า');
       </button>
      <?php endforeach; ?>
      <div class="product-search-empty" id="stockInEmpty" style="display:none">ไม่พบสินค้าที่ค้นหา</div>
-     <div class="product-search-pagination" id="stockInPagination" style="display:none"></div>
     </div>
    </div>
    <div class="selected-product-inline" id="stockInSelectedText">ยังไม่ได้เลือกสินค้า</div>
@@ -56,10 +55,10 @@ page_start('สินค้าเข้า');
 </div>
 <script>
 (function(){
- const input=document.getElementById('stockInSearch'), hidden=document.getElementById('stockInProductId'), list=document.getElementById('stockInList'), empty=document.getElementById('stockInEmpty'), pagination=document.getElementById('stockInPagination'), selectedText=document.getElementById('stockInSelectedText');
+ const input=document.getElementById('stockInSearch'), hidden=document.getElementById('stockInProductId'), list=document.getElementById('stockInList'), empty=document.getElementById('stockInEmpty'), selectedText=document.getElementById('stockInSelectedText');
  const imgEmpty=document.getElementById('stockInImageEmpty'), imgContent=document.getElementById('stockInImageContent'), img=document.getElementById('stockInImage'), imgName=document.getElementById('stockInImageName'), imgCode=document.getElementById('stockInImageCode');
  const allItems=Array.from(document.querySelectorAll('#stockInList .product-search-item'));
- const pageSize=5; let filteredItems=allItems.slice(), currentPage=1;
+ let filteredItems=allItems.slice();
  function selectProduct(btn){
   document.querySelectorAll('#stockInList .product-search-item.selected').forEach(x=>x.classList.remove('selected')); btn.classList.add('selected');
   hidden.value=btn.dataset.id; input.value=btn.dataset.name+' ('+btn.dataset.code+')'; selectedText.textContent='สินค้าที่เลือก: '+btn.dataset.code+' - '+btn.dataset.name;
@@ -71,26 +70,17 @@ page_start('สินค้าเข้า');
    img.src='/image.php?id='+encodeURIComponent(btn.dataset.id)+'&v='+Date.now();
   }else{imgEmpty.textContent='สินค้านี้ยังไม่มีรูปภาพ';}
  }
- function renderPage(){
-  const totalPages=Math.max(1,Math.ceil(filteredItems.length/pageSize)); currentPage=Math.min(currentPage,totalPages);
+ function renderList(){
   allItems.forEach(btn=>btn.style.display='none');
-  const start=(currentPage-1)*pageSize;
-  filteredItems.slice(start,start+pageSize).forEach(btn=>btn.style.display='flex');
+  filteredItems.forEach(btn=>btn.style.display='flex');
   empty.style.display=filteredItems.length?'none':'block';
-  if(filteredItems.length>pageSize){
-   pagination.style.display='flex';
-   pagination.innerHTML='<span>หน้า '+currentPage+' / '+totalPages+'</span><div class="actions" style="margin:0;gap:6px">'+
-    (currentPage>1?'<button type="button" class="button secondary" data-page="'+(currentPage-1)+'">‹ ก่อนหน้า</button>':'<button type="button" class="button secondary" disabled>‹ ก่อนหน้า</button>')+
-    (currentPage<totalPages?'<button type="button" class="button primary" data-page="'+(currentPage+1)+'">ถัดไป ›</button>':'<button type="button" class="button primary" disabled>ถัดไป ›</button>')+'</div>';
-   pagination.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>{currentPage=Number(b.dataset.page);renderPage();}));
-  }else{pagination.style.display='none';pagination.innerHTML='';}
  }
- function filter(){const q=input.value.trim().toLowerCase();filteredItems=allItems.filter(btn=>{const hay=(btn.dataset.name+' '+btn.dataset.code).toLowerCase();return !q||hay.includes(q);});currentPage=1;renderPage();list.classList.add('open');}
+ function filter(){const q=input.value.trim().toLowerCase();filteredItems=allItems.filter(btn=>{const hay=(btn.dataset.name+' '+btn.dataset.code).toLowerCase();return !q||hay.includes(q);});renderList();list.classList.add('open');}
  input.addEventListener('focus',filter); input.addEventListener('input',filter);
  allItems.forEach(btn=>btn.addEventListener('click',()=>{selectProduct(btn);list.classList.remove('open');}));
  document.getElementById('stockInForm').addEventListener('submit',e=>{if(!hidden.value){e.preventDefault();alert('กรุณาเลือกสินค้า');input.focus();}});
  document.addEventListener('click',e=>{if(!e.target.closest('.product-search-box'))list.classList.remove('open');});
- renderPage();
+ renderList();
 })();
 </script>
 <?php page_end();
