@@ -1,1 +1,5 @@
-V24
+Stock Management V26
+- Dashboard: replaced 12-month withdrawal trend line chart with a single doughnut chart.
+- Doughnut uses top 10 products withdrawn over the latest 12 months.
+- Hover tooltip shows product name, quantity withdrawn, and percentage of the displayed total.
+- Retains existing V25 features, including first/last pagination and user Login changes.
