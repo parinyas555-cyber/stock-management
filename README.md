@@ -1,17 +1,13 @@
-# Stock Management V13
+# Stock Management V21
 
-V13 builds on V12 and adds a Factory Reset entry directly in the **Reports Summary** page for administrators.
+V21 is based on V20 and adds improvements to the Stock IN / Stock OUT pages.
 
-## Factory Reset
-- Admin-only access.
-- The Reports Summary page now has a **คืนค่าโรงงาน** button.
-- It opens the existing safe Factory Reset page.
-- Reset clears stock movement history and resets current stock to 0 while preserving product master data, active/inactive status, users, and database structure.
-- The reset page requires typing `RESET` and confirmation.
-- CSV backup and reset audit log remain available from the reset page.
-
-
-## V15
-- Products page shows 25 products per page.
-- Previous / Next pagination preserves search and status filters.
-- Displays current range and total product count.
+## Changes
+- Search products directly by product name or product code without scrolling through a long list.
+- Search results show product name, code, and current stock.
+- Clicking a product selects it for the transaction.
+- Selected product image is shown in a separate panel on the right, matching the Warehouse page layout.
+- Products without images show a message instead of an empty image box.
+- Image loading errors are handled without creating extra image boxes.
+- Responsive layout for desktop and mobile.
+- Existing V20 features are preserved.

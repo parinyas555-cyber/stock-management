@@ -1,1 +1,5 @@
-Stock Management V18 - Product image selection panel
+Stock Management V21
+- Stock IN/OUT searchable product selector by code/name
+- Selected product image panel matching Warehouse layout
+- No need to scroll through large product lists
+- Responsive desktop/mobile layout
