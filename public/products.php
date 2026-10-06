@@ -74,15 +74,23 @@ function selectProductRow(row){
  row.classList.add('selected');
  selectedName.textContent=row.dataset.productName||'';
  selectedCode.textContent='รหัสสินค้า: '+(row.dataset.productCode||'');
- selectedContent.style.display='block';
- selectedEmpty.style.display='none';
  selectedImage.style.display='none';
  selectedImage.removeAttribute('src');
+
  if(row.dataset.hasImage==='1'){
+   selectedEmpty.style.display='none';
+   selectedContent.style.display='block';
    selectedImage.onload=()=>{selectedImage.style.display='block';};
-   selectedImage.onerror=()=>{selectedImage.style.display='none';selectedEmpty.textContent='ไม่สามารถแสดงรูปภาพสินค้าได้';selectedEmpty.style.display='flex';};
+   selectedImage.onerror=()=>{
+     selectedImage.style.display='none';
+     selectedContent.style.display='none';
+     selectedEmpty.textContent='ไม่สามารถแสดงรูปภาพสินค้าได้';
+     selectedEmpty.style.display='flex';
+   };
    selectedImage.src='/image.php?id='+encodeURIComponent(row.dataset.productId)+'&v='+Date.now();
  }else{
+   // สินค้าที่ไม่มีรูป: แสดงเฉพาะข้อความ ไม่สร้าง/แสดงช่องรูปว่าง
+   selectedContent.style.display='none';
    selectedEmpty.textContent='สินค้านี้ยังไม่มีรูปภาพ';
    selectedEmpty.style.display='flex';
  }
