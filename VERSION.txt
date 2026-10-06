@@ -1,1 +1,1 @@
-Stock Management V14 - Admin-only permanent product deletion
+Stock Management V15 - Product pagination (25 items/page) with Previous/Next
