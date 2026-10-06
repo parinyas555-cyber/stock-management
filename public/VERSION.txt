@@ -1,0 +1,1 @@
+Stock Management V16 - 10 items per page by default with selectable 10/20/30/50/100 pagination on Products, Movements, Reports and Users

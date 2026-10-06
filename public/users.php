@@ -63,7 +63,20 @@ if (isset($_GET['edit'])) {
     $s->execute([(int)$_GET['edit']]);
     $edit = $s->fetch();
 }
-$users = $pdo->query('SELECT id,username,full_name,role,active,created_at FROM users ORDER BY id')->fetchAll();
+$allowedPerPage=[10,20,30,50,100];
+$perPage=(int)($_GET['per_page']??10);
+if(!in_array($perPage,$allowedPerPage,true))$perPage=10;
+$total=(int)$pdo->query('SELECT COUNT(*) FROM users')->fetchColumn();
+$page=max(1,(int)($_GET['page']??1));
+$totalPages=max(1,(int)ceil($total/$perPage));
+$page=min($page,$totalPages);
+$offset=($page-1)*$perPage;
+$s=$pdo->prepare('SELECT id,username,full_name,role,active,created_at FROM users ORDER BY id LIMIT ? OFFSET ?');
+$s->execute([$perPage,$offset]);
+$users=$s->fetchAll();
+$page_start=$total>0?$offset+1:0;
+$page_end=min($offset+$perPage,$total);
+$queryBase='per_page='.$perPage;
 
 page_start('การจัดการผู้ใช้งาน');
 ?>
@@ -120,6 +133,13 @@ page_start('การจัดการผู้ใช้งาน');
     <?php endforeach; ?>
 </table>
 </div>
+<?php if($total>0): ?>
+<div class="card" style="margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+  <div style="color:#64748b;font-size:14px">แสดงรายการ <?=number_format($page_start)?>–<?=number_format($page_end)?> จากทั้งหมด <?=number_format($total)?> รายการ</div>
+  <form class="actions" method="get" style="margin:0"><input type="hidden" name="page" value="1"><label style="margin:0">แสดงต่อหน้า</label><select name="per_page" onchange="this.form.submit()"><?php foreach([10,20,30,50,100] as $n): ?><option value="<?=$n?>" <?=$perPage===$n?'selected':''?>><?=$n?> รายการ</option><?php endforeach; ?></select></form>
+  <div class="actions" style="margin:0"><?php if($page>1): ?><a class="button secondary" href="/users.php?<?=$queryBase?>&page=<?=$page-1?>">‹ ก่อนหน้า</a><?php else: ?><button class="button secondary" type="button" disabled>‹ ก่อนหน้า</button><?php endif; ?><span class="button secondary" style="cursor:default">หน้า <?=$page?> / <?=$totalPages?></span><?php if($page<$totalPages): ?><a class="button primary" href="/users.php?<?=$queryBase?>&page=<?=$page+1?>">ถัดไป ›</a><?php else: ?><button class="button primary" type="button" disabled>ถัดไป ›</button><?php endif; ?></div>
+</div>
+<?php else: ?><div class="card" style="margin-top:18px;text-align:center;color:#64748b">ไม่พบผู้ใช้งาน</div><?php endif; ?>
 <script>
 function togglePassword(id, btn) {
     const input = document.getElementById(id);
