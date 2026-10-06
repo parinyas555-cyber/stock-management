@@ -8,7 +8,7 @@ $lowOffset=($lowPage-1)*$lowPerPage;
 $lowStmt=$pdo->prepare("SELECT name,current_stock,min_stock FROM products WHERE current_stock<=min_stock ORDER BY current_stock ASC,name ASC LIMIT ? OFFSET ?");
 $lowStmt->execute([$lowPerPage,$lowOffset]);
 $lowRows=$lowStmt->fetchAll();
-page_start('แดชบอร์ด');?>
+page_start('Dashboard');?>
 <div class="card" style="background:linear-gradient(135deg,#172554 0%,#312e81 52%,#4c1d95 100%);color:#fff;border:0;overflow:hidden;position:relative;margin-bottom:18px">
   <div style="position:absolute;width:240px;height:240px;border-radius:50%;right:-80px;top:-110px;background:rgba(255,255,255,.08)"></div>
   <div style="position:absolute;width:130px;height:130px;border-radius:50%;right:150px;bottom:-90px;background:rgba(34,211,238,.10)"></div>
