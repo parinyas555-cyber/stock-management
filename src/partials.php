@@ -56,11 +56,13 @@ checkSystemStatus();setInterval(checkSystemStatus,15000);
       const nextMain=doc.querySelector('main');
       const currentMain=document.querySelector('main');
       if(!nextMain||!currentMain)throw new Error('ไม่พบเนื้อหาหน้าเว็บ');
+      const scrollX=window.scrollX;
+      const scrollY=window.scrollY;
       currentMain.innerHTML=nextMain.innerHTML;
       const nextTitle=doc.querySelector('title'); if(nextTitle) document.title=nextTitle.textContent;
       runScripts(currentMain);
       if(push)history.pushState({ajax:true},'',url);
-      window.scrollTo({top:0,behavior:'smooth'});
+      requestAnimationFrame(()=>window.scrollTo(scrollX,scrollY));
     }catch(e){console.error(e);location.href=url;}
     finally{busy=false;document.body.classList.remove('ajax-loading');}
   }
